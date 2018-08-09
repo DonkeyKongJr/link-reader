@@ -1,9 +1,9 @@
 using System;
 
-public class ReaderFactory
+public static class ReaderFactory
 {
 
-    public IReader GetReader(string type)
+    public static IReader GetReader(string type)
     {
         if (type == "Html")
         {
