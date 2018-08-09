@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace LinkReader
 {
@@ -6,7 +7,19 @@ namespace LinkReader
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            while (true)
+            {
+                Console.WriteLine("Welcome to link reader!");
+                Console.WriteLine("I will show you every link which is present on a html site");
+                Console.WriteLine("Please provide a webiste and press [ENTER]");
+                var url = Console.ReadLine();
+
+                var htmlReader = ReaderFactory.GetReader("Html");
+                var links = htmlReader.GetLinksFromUrl(url);
+
+                links.ToList().ForEach(Console.WriteLine);
+                Console.ReadKey();
+            }
         }
     }
 }
