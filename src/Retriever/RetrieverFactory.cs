@@ -1,17 +1,16 @@
 using System;
+using LinkReader.Retriever;
 
 namespace LinkReader.Reader
 {
-    public static class ReaderFactory
+    public static class RetrieverFactory
     {
-
-        public static IReader GetReader(string type)
+        public static IRetriever GetRetriever(string type)
         {
             if (type?.ToUpper() == "HTML")
             {
-                return new HtmlReader();
+                return new HtmlRetriever();
             }
-
             throw new NotSupportedException();
         }
     }
