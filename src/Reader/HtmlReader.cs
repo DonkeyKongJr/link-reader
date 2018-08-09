@@ -4,55 +4,35 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 
-public class HtmlReader : IReader
+namespace LinkReader.Reader
 {
-    public IEnumerable<string> GetLinksFromUrl(string url)
+    public class HtmlReader : IReader
     {
-        var html = this.GetHtmlCodeFromUrl(url);
-        return this.ExtractLinksFromString(html);
-    }
-
-    private IEnumerable<string> ExtractLinksFromString(string html)
-    {
-        var result = new List<string>();
-
-        var linkregex = new Regex("<a href=\"(.*?)\">", RegexOptions.IgnoreCase);
-        var mc = linkregex.Matches(html);
-
-        foreach (Match m1 in mc)
+        public IEnumerable<string> GetLinksFromUrl(string url)
         {
-            result.Add(m1.Groups[1].ToString());
+            var html = this.GetHtmlCodeFromUrl(url);
+            return this.ExtractLinksFromString(html);
         }
 
-        return result;
-    }
-
-    private string GetHtmlCodeFromUrl(string url)
-    {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-        if (response.StatusCode == HttpStatusCode.OK)
+        private IEnumerable<string> ExtractLinksFromString(string html)
         {
-            Stream receiveStream = response.GetResponseStream();
-            StreamReader readStream = null;
+            var result = new List<string>();
 
-            if (response.CharacterSet == null)
+            var linkregex = new Regex("<a href=\"(.*?)\">", RegexOptions.IgnoreCase);
+            var mc = linkregex.Matches(html);
+
+            foreach (Match m1 in mc)
             {
-                readStream = new StreamReader(receiveStream);
+                result.Add(m1.Groups[1].ToString());
             }
-            else
-            {
-                readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-            }
-            string data = readStream.ReadToEnd();
 
-            response.Close();
-            readStream.Close();
-
-            return data;
+            return result;
         }
 
-        return string.Empty;
+        private string GetHtmlCodeFromUrl(string url)
+        {
+            var retriever = RetrieverFactory.GetRetriever("html");
+            return retriever.Retrieve(url);
+        }
     }
 }
