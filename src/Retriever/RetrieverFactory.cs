@@ -1,7 +1,7 @@
 using System;
 using LinkReader.Retriever;
 
-namespace LinkReader.Reader
+namespace LinkReader.Retriever
 {
     public static class RetrieverFactory
     {

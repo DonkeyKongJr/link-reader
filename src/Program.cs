@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using LinkReader.Reader;
+using LinkReader.Retriever;
 
 namespace LinkReader
 {
