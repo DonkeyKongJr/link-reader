@@ -15,8 +15,11 @@ namespace LinkReader
                 Console.WriteLine("Please provide a webiste and press [ENTER]");
                 var url = Console.ReadLine();
 
+                var retriever = RetrieverFactory.GetRetriever("Html");
+                var html = retriever.Retrieve(url);
+
                 var htmlReader = ReaderFactory.GetReader("Html");
-                var links = htmlReader.GetLinksFromUrl(url);
+                var links = htmlReader.GetLinksFromText(html);
 
                 links.ToList().ForEach(Console.WriteLine);
                 Console.ReadKey();
