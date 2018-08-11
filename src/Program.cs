@@ -5,7 +5,7 @@ using LinkReader.Retriever;
 
 namespace LinkReader
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
