@@ -5,9 +5,8 @@ addons:
   sonarcloud:
     organization: 'donkeykongjr-github'
 
+before_install:
+  - bash ./tools/travis-install-dependencies.sh
+
 script:
-  - dotnet restore ./src
-  - dotnet build ./src
-  - dotnet restore ./test
-  - dotnet test ./test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput="./code-coverage/"
-  - sonar-scanner
+  - bash ./tools/travis-build.sh
