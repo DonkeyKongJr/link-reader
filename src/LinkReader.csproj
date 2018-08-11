@@ -1,6 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ProjectGuid>{65436401-59ea-4892-ba6c-64ae30f1cecf}</ProjectGuid>
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
