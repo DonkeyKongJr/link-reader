@@ -1,8 +1,13 @@
 language: csharp
 mono: none
 dotnet: 2.1
+addons:
+  sonarcloud:
+    organization: 'donkeykongjr-github'
+
 script:
   - dotnet restore ./src
   - dotnet build ./src
   - dotnet restore ./test
-  - dotnet test ./test
+  - dotnet test ./test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput="./code-coverage/"
+  - sonar-scanner

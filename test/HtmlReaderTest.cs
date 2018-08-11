@@ -22,6 +22,22 @@ namespace LinkReaderTest
             Assert.Equal("www.orf.at", result.First());
         }
 
+        [Fact]
+        public void shouldReturnHtmlReaderFromFactory()
+        {
+            var reader = ReaderFactory.GetReader("html");
+
+            Assert.IsType<HtmlReader>(reader);
+        }
+
+        [Fact]
+        public void shouldThrowNotSupportedExceptionWhenReaderIsNotSupported()
+        {
+            Action reader = () => ReaderFactory.GetReader("hans");
+
+            Assert.Throws<NotSupportedException>(reader);
+        }
+
         private string GetTestHTmlData()
         {
             return "<h1><a href=\"www.orf.at\"></a></h1>";
