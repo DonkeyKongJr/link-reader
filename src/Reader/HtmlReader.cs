@@ -8,10 +8,9 @@ namespace LinkReader.Reader
 {
     public class HtmlReader : IReader
     {
-        public IEnumerable<string> GetLinksFromUrl(string url)
+        public IEnumerable<string> GetLinksFromText(string text)
         {
-            var html = this.GetHtmlCodeFromUrl(url);
-            return this.ExtractLinksFromString(html);
+            return this.ExtractLinksFromString(text);
         }
 
         private IEnumerable<string> ExtractLinksFromString(string html)
@@ -27,12 +26,6 @@ namespace LinkReader.Reader
             }
 
             return result;
-        }
-
-        private string GetHtmlCodeFromUrl(string url)
-        {
-            var retriever = RetrieverFactory.GetRetriever("html");
-            return retriever.Retrieve(url);
         }
     }
 }
