@@ -16,5 +16,4 @@
   <ItemGroup>
     <ProjectReference Include="..\src\LinkReader.csproj" />
   </ItemGroup>
-
 </Project>
