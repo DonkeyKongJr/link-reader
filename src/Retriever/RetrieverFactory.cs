@@ -7,7 +7,7 @@ namespace LinkReader.Retriever
 {
     public static class RetrieverFactory
     {
-        public static IRetriever GetRetriever(string type, ServiceProvider provider)
+        public static IRetriever GetRetriever(string type, IServiceProvider provider)
         {
             if (type?.ToUpper() == "HTML")
             {
