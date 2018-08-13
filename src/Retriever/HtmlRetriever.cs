@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using LinkReader.Retriever.WebHandler;
 
 namespace LinkReader.Retriever
 {
@@ -9,7 +10,9 @@ namespace LinkReader.Retriever
     {
         public string Retrieve(string url)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var webRequestHandler = new WebRequestHandler();
+
+            var request = (HttpWebRequest)webRequestHandler.Create(url);
             var response = (HttpWebResponse)request.GetResponse();
 
             if (response.StatusCode == HttpStatusCode.OK)
