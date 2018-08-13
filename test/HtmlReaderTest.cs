@@ -17,9 +17,18 @@ namespace LinkReaderTest
         public void ShouldReturnLinkFromATag()
         {
             var htmlReader = new HtmlReader();
-            var result = htmlReader.GetLinksFromText(this.GetTestHTmlData());
+            var result = htmlReader.GetLinksFromText(this.GetValidTestHtmlData());
 
-            Assert.Equal("www.orf.at", result.First());
+            Assert.Equal("https://www.orf.at", result.First());
+        }
+
+        [Fact]
+        public void ShouldReturnNoLinkFromInvalidATag()
+        {
+            var htmlReader = new HtmlReader();
+            var result = htmlReader.GetLinksFromText(this.GetInvalidTestHtmlData());
+
+            Assert.Equal(0, result.Count());
         }
 
         [Fact]
@@ -31,16 +40,21 @@ namespace LinkReaderTest
         }
 
         [Fact]
-        public void shouldThrowNotSupportedExceptionWhenReaderIsNotSupported()
+        public void ShouldThrowNotSupportedExceptionWhenReaderIsNotSupported()
         {
             Action reader = () => ReaderFactory.GetReader("hans");
 
             Assert.Throws<NotSupportedException>(reader);
         }
 
-        private string GetTestHTmlData()
+        private string GetInvalidTestHtmlData()
         {
             return "<h1><a href=\"www.orf.at\"></a></h1>";
+        }
+
+        private string GetValidTestHtmlData()
+        {
+            return "<h1><a href=\"https://www.orf.at\"></a></h1>";
         }
     }
 }
