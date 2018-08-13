@@ -1,15 +1,18 @@
 using System;
 using LinkReader.Retriever;
+using LinkReader.Retriever.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LinkReader.Retriever
 {
     public static class RetrieverFactory
     {
-        public static IRetriever GetRetriever(string type)
+        public static IRetriever GetRetriever(string type, IServiceProvider provider)
         {
             if (type?.ToUpper() == "HTML")
             {
-                return new HtmlRetriever();
+                var webRequestHandler = provider.GetService<IWebRequest>();
+                return new HtmlRetriever(webRequestHandler);
             }
             throw new NotSupportedException();
         }

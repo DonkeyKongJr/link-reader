@@ -23,7 +23,7 @@ namespace LinkReaderTest
         }
 
         [Fact]
-        public void shouldReturnHtmlReaderFromFactory()
+        public void ShouldReturnHtmlReaderFromFactory()
         {
             var reader = ReaderFactory.GetReader("html");
 

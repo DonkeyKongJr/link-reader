@@ -22,10 +22,24 @@ namespace LinkReader.Reader
 
             foreach (Match m1 in mc)
             {
-                result.Add(m1.Groups[1].ToString());
+                var href = m1.Groups[1].ToString();
+                if (href.StartsWith("http"))
+                {
+                    result.Add(this.CheckResultUrl(href));
+                }
             }
 
             return result;
+        }
+
+        private string CheckResultUrl(string url)
+        {
+            if (url.Contains('"'))
+            {
+                url = url.Split('"')[0];
+            }
+
+            return url;
         }
     }
 }
