@@ -15,7 +15,7 @@ namespace LinkReaderTest
         }
 
         [Fact]
-        public void shouldReturnHtmlRetrieverFromFactory()
+        public void ShouldReturnHtmlRetrieverFromFactory()
         {
             var retriever = RetrieverFactory.GetRetriever("html", _providers);
 
@@ -23,7 +23,7 @@ namespace LinkReaderTest
         }
 
         [Fact]
-        public void shouldThrowNotSupportedExceptionWhenReaderIsNotSupported()
+        public void ShouldThrowNotSupportedExceptionWhenReaderIsNotSupported()
         {
             Action reader = () => RetrieverFactory.GetRetriever("hans", _providers);
 
