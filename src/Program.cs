@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using LinkReader.Installer;
 using LinkReader.Reader;
 using LinkReader.Retriever;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LinkReader
 {
@@ -9,6 +11,8 @@ namespace LinkReader
     {
         static void Main(string[] args)
         {
+            var provider = ServiceInstaller.Install();
+
             while (true)
             {
                 Console.WriteLine("Welcome to link reader!");
@@ -16,7 +20,7 @@ namespace LinkReader
                 Console.WriteLine("Please provide a webiste and press [ENTER]");
                 var url = Console.ReadLine();
 
-                var retriever = RetrieverFactory.GetRetriever("Html");
+                var retriever = RetrieverFactory.GetRetriever("Html", provider);
                 var html = retriever.Retrieve(url);
 
                 var htmlReader = ReaderFactory.GetReader("Html");

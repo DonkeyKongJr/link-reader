@@ -2,17 +2,23 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using LinkReader.Retriever.Interfaces;
 using LinkReader.Retriever.WebHandler;
 
 namespace LinkReader.Retriever
 {
     public class HtmlRetriever : IRetriever
     {
+        private readonly IWebRequest _webRequest;
+
+        public HtmlRetriever(IWebRequest webRequest)
+        {
+            _webRequest = webRequest;
+        }
+
         public string Retrieve(string url)
         {
-            var webRequestHandler = new WebRequestHandler();
-
-            var request = (HttpWebRequest)webRequestHandler.Create(url);
+            var request = (HttpWebRequest)_webRequest.Create(url);
             var response = (HttpWebResponse)request.GetResponse();
 
             if (response.StatusCode == HttpStatusCode.OK)
