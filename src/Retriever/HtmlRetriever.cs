@@ -19,30 +19,21 @@ namespace LinkReader.Retriever
         public string Retrieve(string url)
         {
             var request = (HttpWebRequest)_webRequest.Create(url);
-            var response = (HttpWebResponse)request.GetResponse();
 
-            if (response.StatusCode == HttpStatusCode.OK)
+            using (var response = (HttpWebResponse)request.GetResponse())
             {
-                var receiveStream = response.GetResponseStream();
-                StreamReader readStream = null;
-
-                if (response.CharacterSet == null)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    readStream = new StreamReader(receiveStream);
-                }
-                else
-                {
-                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-                }
-                var data = readStream.ReadToEnd();
+                    var receiveStream = response.GetResponseStream();
+                    var readStream = new StreamReader(receiveStream);
+                    var data = readStream.ReadToEnd();
+                    readStream.Close();
 
-                response.Close();
-                readStream.Close();
+                    return data;
+                }
 
-                return data;
+                return string.Empty;
             }
-
-            return string.Empty;
         }
     }
 }
