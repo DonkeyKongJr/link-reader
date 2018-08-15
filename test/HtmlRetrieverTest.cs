@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using LinkReader.Installer;
 using LinkReader.Reader;
 using LinkReader.Retriever;
@@ -50,6 +52,29 @@ namespace LinkReaderTest
             var result = retriever.Retrieve("test");
 
             Assert.Empty(result);
+        }
+
+        [Fact]
+        public void ShouldReturnContentStringWhenStatusCodeIsOk()
+        {
+            var resultContent = "<html><b>I am the test</b></html>";
+            var resultContentBytes = Encoding.ASCII.GetBytes(resultContent);
+            var moq = new Mock<IWebRequest>();
+            var moqHttpWebRequest = new Mock<HttpWebRequest>();
+            var moqHttpWebResponse = new Mock<HttpWebResponse>();
+
+            moqHttpWebResponse.Setup(_ => _.StatusCode).Returns(HttpStatusCode.OK);
+
+            moqHttpWebResponse.Setup(_ => _.GetResponseStream()).Returns(new MemoryStream(resultContentBytes));
+
+            moqHttpWebRequest.Setup(_ => _.GetResponse()).Returns(moqHttpWebResponse.Object);
+            moq.Setup(_ => _.Create(It.IsAny<string>())).Returns(moqHttpWebRequest.Object);
+
+            var retriever = new HtmlRetriever(moq.Object);
+
+            var result = retriever.Retrieve("test");
+
+            Assert.Equal(resultContent, result);
         }
     }
 }
