@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using LinkReader.Reader;
 using Xunit;
+using FluentAssertions;
 
 namespace LinkReaderTest
 {
@@ -10,7 +11,7 @@ namespace LinkReaderTest
         [Fact]
         public void ShouldTestXUnitTestRunnable()
         {
-            Assert.Equal(4, 2 + 2);
+            (2 + 2).Should().Be(4);
         }
 
         [Fact]
@@ -19,7 +20,7 @@ namespace LinkReaderTest
             var htmlReader = new HtmlReader();
             var result = htmlReader.GetLinksFromText(this.GetValidTestHtmlData());
 
-            Assert.Equal("https://www.orf.at", result.First());
+            result.First().Should().Be("https://www.orf.at");
         }
 
         [Fact]
@@ -28,7 +29,7 @@ namespace LinkReaderTest
             var htmlReader = new HtmlReader();
             var result = htmlReader.GetLinksFromText(this.GetInvalidTestHtmlData());
 
-            Assert.Equal(0, result.Count());
+            result.Count().Should().Be(0);
         }
 
         [Fact]
@@ -36,7 +37,7 @@ namespace LinkReaderTest
         {
             var reader = ReaderFactory.GetReader("html");
 
-            Assert.IsType<HtmlReader>(reader);
+            reader.Should().BeOfType<HtmlReader>();
         }
 
         [Fact]
@@ -44,7 +45,7 @@ namespace LinkReaderTest
         {
             Action reader = () => ReaderFactory.GetReader("hans");
 
-            Assert.Throws<NotSupportedException>(reader);
+            reader.Should().Throw<NotSupportedException>();
         }
 
         private string GetInvalidTestHtmlData()
