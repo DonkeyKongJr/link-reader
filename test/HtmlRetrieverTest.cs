@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using FluentAssertions;
 using LinkReader.Installer;
 using LinkReader.Reader;
 using LinkReader.Retriever;
@@ -25,7 +26,7 @@ namespace LinkReaderTest
         {
             var retriever = RetrieverFactory.GetRetriever("html", _providers);
 
-            Assert.IsType<HtmlRetriever>(retriever);
+            retriever.Should().BeOfType<HtmlRetriever>();
         }
 
         [Fact]
@@ -33,7 +34,7 @@ namespace LinkReaderTest
         {
             Action reader = () => RetrieverFactory.GetRetriever("hans", _providers);
 
-            Assert.Throws<NotSupportedException>(reader);
+            reader.Should().Throw<NotSupportedException>();
         }
 
         [Fact]
@@ -51,7 +52,7 @@ namespace LinkReaderTest
 
             var result = retriever.Retrieve("test");
 
-            Assert.Empty(result);
+            result.Should().BeEmpty();
         }
 
         [Fact]
@@ -74,7 +75,7 @@ namespace LinkReaderTest
 
             var result = retriever.Retrieve("test");
 
-            Assert.Equal(resultContent, result);
+            result.Should().Be(resultContent);
         }
     }
 }
