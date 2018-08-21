@@ -3,6 +3,7 @@ using System.Linq;
 using LinkReader.Installer;
 using LinkReader.Reader;
 using LinkReader.Retriever;
+using LinkReader.Validator;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LinkReader
@@ -12,6 +13,7 @@ namespace LinkReader
         static void Main(string[] args)
         {
             var provider = ServiceInstaller.Install();
+            var urlValidator = provider.GetService<IValidator>();
 
             while (true)
             {
@@ -19,6 +21,12 @@ namespace LinkReader
                 Console.WriteLine("I will show you every link which is present on a html site");
                 Console.WriteLine("Please provide a webiste and press [ENTER]");
                 var url = Console.ReadLine();
+
+                if (!urlValidator.Validate(url))
+                {
+                    Console.WriteLine("Your entered URL was not valid!");
+                    continue;
+                }
 
                 var retriever = RetrieverFactory.GetRetriever("Html", provider);
                 var html = retriever.Retrieve(url);

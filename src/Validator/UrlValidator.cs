@@ -8,7 +8,7 @@ namespace LinkReader.Validator
         {
             Uri uriResult;
             return Uri.TryCreate(text, UriKind.Absolute, out uriResult)
-    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         }
     }
 }
