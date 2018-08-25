@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using LinkReader.Installer;
 using LinkReader.Reader;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LinkReader
 {
+    [ExcludeFromCodeCoverage]
     static class Program
     {
         static void Main(string[] args)
