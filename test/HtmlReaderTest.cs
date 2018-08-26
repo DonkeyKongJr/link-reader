@@ -55,7 +55,7 @@ namespace LinkReaderTest
 
         private string GetValidTestHtmlData()
         {
-            return "<h1><a href=\"https://www.orf.at\"></a></h1>";
+            return "<h1><a href=\"https://www.orf.at\" alt=\"text\"></a></h1>";
         }
     }
 }

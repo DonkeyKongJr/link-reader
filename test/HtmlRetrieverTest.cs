@@ -10,6 +10,7 @@ using LinkReader.Retriever;
 using LinkReader.Retriever.Interfaces;
 using Moq;
 using Xunit;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LinkReaderTest
 {
@@ -76,6 +77,26 @@ namespace LinkReaderTest
             var result = retriever.Retrieve("test");
 
             result.Should().Be(resultContent);
+        }
+
+        [Fact]
+        public void ShouldReturnHttpWebRequest()
+        {
+            IWebRequest webRequest = _providers.GetService<IWebRequest>();
+
+            var result = webRequest.Create("https://google.com");
+
+            result.Should().BeOfType<HttpWebRequest>();
+        }
+
+        [Fact]
+        public void ShouldThrowExceptionWhenUrlIsInvalid()
+        {
+            IWebRequest webRequest = _providers.GetService<IWebRequest>();
+
+            Action result = () => webRequest.Create("abc");
+
+            result.Should().Throw<UriFormatException>();
         }
     }
 }
