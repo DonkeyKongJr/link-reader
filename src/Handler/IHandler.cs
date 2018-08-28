@@ -1,8 +1,8 @@
 namespace LinkReader.Handler
 {
     public interface IHandler<in TIn, out TOut>
-    where TIn : struct
-    where TOut : struct
+    where TIn : class
+    where TOut : class
     {
         TOut Handle(TIn value);
     }
