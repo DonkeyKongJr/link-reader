@@ -6,7 +6,7 @@ namespace LinkReader.Handler
         {
             if (!value.StartsWith("http"))
             {
-                value.Insert(0, "https");
+                value = value.Insert(0, "https://");
             }
 
             return value;
