@@ -29,9 +29,16 @@ namespace LinkReader
 
                 var url = Console.ReadLine();
 
-                var links = linkReaderManager.Run(url, 1, provider);
+                try
+                {
+                    var links = linkReaderManager.Run(url, 1, provider);
+                    links.ToList().ForEach(Console.WriteLine);
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
-                links.ToList().ForEach(Console.WriteLine);
                 Console.ReadKey();
             }
         }
