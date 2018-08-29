@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using LinkReader.Handler;
 using LinkReader.Installer;
 using LinkReader.Reader;
 using LinkReader.Retriever;
@@ -15,6 +16,7 @@ namespace LinkReader
         static void Main(string[] args)
         {
             var provider = ServiceInstaller.Install();
+            var urlProtocolHandler = provider.GetService<IHandler<string, string>>();
             var urlValidator = provider.GetService<IValidator>();
 
             while (true)
@@ -22,7 +24,9 @@ namespace LinkReader
                 Console.WriteLine("Welcome to link reader!");
                 Console.WriteLine("I will show you every link which is present on a html site");
                 Console.WriteLine("Please provide a webiste and press [ENTER]");
+
                 var url = Console.ReadLine();
+                url = urlProtocolHandler.Handle(url);
 
                 if (!urlValidator.Validate(url))
                 {
