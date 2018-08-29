@@ -29,9 +29,20 @@ namespace LinkReader
 
                 var url = Console.ReadLine();
 
+                Console.WriteLine("Please provide the depth of the crawler [ENTER]");
+                var depthText = Console.ReadLine();
+
+                uint depth;
+
+                if (!uint.TryParse(depthText, out depth))
+                {
+                    Console.WriteLine("Entered depth was not valid. Please start again.");
+                    continue;
+                }
+
                 try
                 {
-                    var links = linkReaderManager.Run(url, 1, provider);
+                    var links = linkReaderManager.Run(url, depth, provider);
                     links.ToList().ForEach(Console.WriteLine);
                 }
                 catch (ArgumentException ex)
