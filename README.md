@@ -1,6 +1,6 @@
 # link-reader
 
-dotnet core console application which loads all links from a given url.
+dotnet core console application which loads all links from a given url and scans the urls from the already retrieved urls by a depth property.
 
 [![Build status](https://pureit.visualstudio.com/link-reader/_apis/build/status/link-reader-ASP.NET%20Core-CI)](https://pureit.visualstudio.com/link-reader/_build/latest?definitionId=3)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=link-reader&metric=alert_status)](https://sonarcloud.io/dashboard?id=link-reader)
