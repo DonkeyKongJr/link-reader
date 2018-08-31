@@ -30,3 +30,4 @@ msbuild.wrn
 
 # Code Coverage
 code-coverage/
+test/coverage.json

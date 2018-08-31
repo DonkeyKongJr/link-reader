@@ -1,4 +1,5 @@
 using LinkReader.Handler;
+using LinkReader.Manager;
 using LinkReader.Retriever.Interfaces;
 using LinkReader.Retriever.WebHandler;
 using LinkReader.Validator;
@@ -14,6 +15,7 @@ namespace LinkReader.Installer
             services.AddSingleton<IWebRequest, WebRequestHandler>();
             services.AddSingleton<IValidator, UrlValidator>();
             services.AddSingleton<IHandler<string, string>, UrlProtocolHandler>();
+            services.AddSingleton<LinkReaderManager>();
             var provider = services.BuildServiceProvider();
 
             return provider;

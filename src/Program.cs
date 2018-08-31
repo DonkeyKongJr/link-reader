@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using LinkReader.Handler;
 using LinkReader.Installer;
+using LinkReader.Manager;
 using LinkReader.Reader;
 using LinkReader.Retriever;
 using LinkReader.Validator;
@@ -18,6 +19,7 @@ namespace LinkReader
             var provider = ServiceInstaller.Install();
             var urlProtocolHandler = provider.GetService<IHandler<string, string>>();
             var urlValidator = provider.GetService<IValidator>();
+            var linkReaderManager = provider.GetService<LinkReaderManager>();
 
             while (true)
             {
@@ -26,21 +28,28 @@ namespace LinkReader
                 Console.WriteLine("Please provide a webiste and press [ENTER]");
 
                 var url = Console.ReadLine();
-                url = urlProtocolHandler.Handle(url);
 
-                if (!urlValidator.Validate(url))
+                Console.WriteLine("Please provide the depth of the crawler [ENTER]");
+                var depthText = Console.ReadLine();
+
+                uint depth;
+
+                if (!uint.TryParse(depthText, out depth))
                 {
-                    Console.WriteLine("Your entered URL was not valid!");
+                    Console.WriteLine("Entered depth was not valid. Please start again.");
                     continue;
                 }
 
-                var retriever = RetrieverFactory.GetRetriever("Html", provider);
-                var html = retriever.Retrieve(url);
+                try
+                {
+                    var links = linkReaderManager.Run(url, depth, provider);
+                    links.ToList().ForEach(Console.WriteLine);
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
-                var htmlReader = ReaderFactory.GetReader("Html");
-                var links = htmlReader.GetLinksFromText(html);
-
-                links.ToList().ForEach(Console.WriteLine);
                 Console.ReadKey();
             }
         }
