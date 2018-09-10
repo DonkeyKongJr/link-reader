@@ -1,4 +1,5 @@
 
+using System;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -19,20 +20,34 @@ namespace LinkReader.Retriever
         public string Retrieve(string url)
         {
             var request = (HttpWebRequest)_webRequest.Create(url);
+            var result = string.Empty;
 
-            using (var response = (HttpWebResponse)request.GetResponse())
+            TryRetrieve(request, out result);
+            return result;
+        }
+
+        private bool TryRetrieve(HttpWebRequest request, out string sourceCode)
+        {
+            sourceCode = string.Empty;
+            try
             {
-                if (response.StatusCode == HttpStatusCode.OK)
+                using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    var receiveStream = response.GetResponseStream();
-                    var readStream = new StreamReader(receiveStream);
-                    var data = readStream.ReadToEnd();
-                    readStream.Close();
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        var receiveStream = response.GetResponseStream();
+                        var readStream = new StreamReader(receiveStream);
+                        var data = readStream.ReadToEnd();
+                        readStream.Close();
 
-                    return data;
+                        sourceCode = data;
+                    }
+                    return true;
                 }
-
-                return string.Empty;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
