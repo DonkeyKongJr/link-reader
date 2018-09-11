@@ -4,6 +4,7 @@ using LinkReader.Retriever.Interfaces;
 using LinkReader.Retriever.WebHandler;
 using LinkReader.Validator;
 using Microsoft.Extensions.DependencyInjection;
+using Writer;
 
 namespace LinkReader.Installer
 {
@@ -16,6 +17,7 @@ namespace LinkReader.Installer
             services.AddSingleton<IValidator, UrlValidator>();
             services.AddSingleton<IHandler<string, string>, UrlProtocolHandler>();
             services.AddSingleton<LinkReaderManager>();
+            services.AddSingleton<IOverwriteSamePositionWriter, OverwriteSamePositionWriter>();
             var provider = services.BuildServiceProvider();
 
             return provider;
